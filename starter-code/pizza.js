@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
                 } else{
                     //index $(v).text()
                     let indexOrder = $(v).text().split(' ').join('-');
-                    //Get Price from price object
+                    //Price will be ZERO
                     let price = 0;
                     //Put price in order object
                     this.order[indexOrder] = price
