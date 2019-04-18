@@ -35,7 +35,7 @@ $( document ).ready(function() {
                     break;
                 case "White sauce":
                 //sauce-white
-                $(".sauce-white").toggle("sauce-white");                        
+                $(".sauce").toggleClass("sauce-white");                        
                     break;
 
                 case "Gluten-free crust":
@@ -91,7 +91,9 @@ $( document ).ready(function() {
             $("strong").text("$"+total);
         }
 
-        this.setDefault = function(){            
+        this.setDefault = function(){
+            $(".crust").toggleClass("crust-gluten-free");
+            $(".sauce").toggleClass("sauce-white");        
             $(".btn-sauce,.btn-crust").toggleClass("active",false);
             this.updatePrice();
             
