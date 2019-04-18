@@ -2,6 +2,7 @@
 $( document ).ready(function() {
 
     var PizzaHandler = function(){
+        
         this.prices = {
             "cheesePizza" : 10,
             "Pepperonni" : 1,
@@ -21,27 +22,23 @@ $( document ).ready(function() {
         }
         
         $("button").click(function(event){
-            // $(this).text() clicked , do something
             $(event.currentTarget).toggleClass("active")
             switch ($(event.currentTarget).text()) {
                 case "Pepperonni":
                     $(".pep").toggle("pep");                    
                     break;
                 case "Mushrooms":
-                $(".mushroom").toggle("mushroom");                      
+                    $(".mushroom").toggle("mushroom");                      
                     break;
                 case "Green peppers":
-                $(".green-pepper").toggle("green-pepper");                        
+                    $(".green-pepper").toggle("green-pepper");                        
                     break;
                 case "White sauce":
-                //sauce-white
-                $(".sauce").toggleClass("sauce-white");                        
+                    $(".sauce").toggleClass("sauce-white");                        
                     break;
-
                 case "Gluten-free crust":
-                $(".crust").toggleClass("crust-gluten-free");
+                    $(".crust").toggleClass("crust-gluten-free");
                     break;
-            
                 default:
                     break;                        
             }
@@ -49,42 +46,32 @@ $( document ).ready(function() {
         }.bind(this))      
 
         this.updatePrice = function(){            
-            //var ingredient = $(element).text();
-           // this.prices[ingredient]
-           $(".btn").each((function( i,v ) {                                
-                if( $(v).hasClass( "active" ) === true  ){
-                    //Ingredient wanted --> Add to object order
-                    //index $(v).text()
-                    let indexOrder = $(v).text().split(' ').join('-');
-                    //Get Price from price object
+           $(".btn").each((function( i,v ) {
+                 //parse innerHTML to object keys
+                let indexOrder = $(v).text().split(' ').join('-');                     
+                if( $(v).hasClass( "active" )){
                     let price = this.prices[indexOrder];
-                    //Put price in order object
                     this.order[indexOrder] = price                                      
                 } else{
-                    //index $(v).text()
-                    let indexOrder = $(v).text().split(' ').join('-');
-                    //Price will be ZERO
                     let price = 0;
-                    //Put price in order object
                     this.order[indexOrder] = price
-                }// end if                
-            }).bind(this)) // end foreach            
+                }           
+            }).bind(this))         
            this.getOrderTotal();
-        } //End Update Price
+        } 
 
         this.getOrderTotal = function (){
-            //Sum object order and change total price
-            var total = Object.keys(this.order).reduce((sum,key)=>sum+parseFloat(this.order[key]||0),0);
-            //Remove from list
-            Object.keys(this.order).forEach((value,key) => {
-                //Key --> this.order index                
+            var total = Object.keys(this.order).reduce((sum,key)=>
+                sum+parseInt(this.order[key]||0)
+            ,0);
+            //Remove from html list
+            Object.keys(this.order).forEach((value) => {
+                // remove dashes and select first word
                 if(value !== "cheesePizza" && this.order[value] === 0){
                     let liToRemove = value.split('-').join(' ').toLowerCase().split(" ")[0]
-                    //$('.panel ul > li:contains("'+liToRemove+'")')
                     $('.panel ul > li:contains("'+liToRemove+'")').hide()
                 }else{
                     let liToRemove = value.split('-').join(' ').toLowerCase().split(" ")[0]
-                    //$('.panel ul > li:contains("'+liToRemove+'")')
                     $('.panel ul > li:contains("'+liToRemove+'")').show()
                 }
             });
@@ -94,9 +81,8 @@ $( document ).ready(function() {
         this.setDefault = function(){
             $(".crust").toggleClass("crust-gluten-free");
             $(".sauce").toggleClass("sauce-white");        
-            $(".btn-sauce,.btn-crust").toggleClass("active",false);
-            this.updatePrice();
-            
+            $(".btn-sauce,.btn-crust").toggleClass("active");
+            this.updatePrice();            
         }.bind(this)()
     }
     var myPizza = new PizzaHandler();
