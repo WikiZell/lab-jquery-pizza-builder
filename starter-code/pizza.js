@@ -1,5 +1,5 @@
 // Write your Pizza Builder JavaScript in this file.
-document.addEventListener("DOMContentLoaded", function(event) {
+$( document ).ready(function() {
 
     var PizzaHandler = function(){
         this.prices = {
@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         }.bind(this)()
     }
     var myPizza = new PizzaHandler();
-})
+});
 
 
 
