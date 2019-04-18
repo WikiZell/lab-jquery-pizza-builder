@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
             "Green-peppers" : 0,
             "White-sauce" : 0,
             "Gluten-free-crust": 0
-        }   
- 
+        }
+        
         $("button").click(function(event){
             // $(this).text() clicked , do something
             $(event.currentTarget).toggleClass("active")
@@ -69,14 +69,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     this.order[indexOrder] = price
                 }// end if                
             }).bind(this)) // end foreach            
-           this.getOrder();
+           this.getOrderTotal();
         } //End Update Price
 
-        this.getOrder = function (){
+        this.getOrderTotal = function (){
             //Sum object order and change total price
             var total = Object.keys(this.order).reduce((sum,key)=>sum+parseFloat(this.order[key]||0),0);
+            //Remove from list
+            Object.keys(this.order).forEach((value,key) => {
+                //Key --> this.order index                
+                if(value !== "cheesePizza" && this.order[value] === 0){
+                    let liToRemove = value.split('-').join(' ').toLowerCase().split(" ")[0]
+                    //$('.panel ul > li:contains("'+liToRemove+'")')
+                    $('.panel ul > li:contains("'+liToRemove+'")').hide()
+                }else{
+                    let liToRemove = value.split('-').join(' ').toLowerCase().split(" ")[0]
+                    //$('.panel ul > li:contains("'+liToRemove+'")')
+                    $('.panel ul > li:contains("'+liToRemove+'")').show()
+                }
+            });
             $("strong").text("$"+total);
-        }   
+        }
+
+        this.setDefault = function(){            
+            $(".btn-sauce,.btn-crust").toggleClass("active",false);
+            this.updatePrice();
+            
+        }.bind(this)()
     }
     var myPizza = new PizzaHandler();
 })
